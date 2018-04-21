@@ -1,0 +1,174 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class CircularInt{
+	public:
+	
+	int number;
+	
+	CircularInt(int x1, int x2){
+		this->start = x1;
+		this->end = x2;	
+		
+		number = start;
+	}
+	
+	
+	CircularInt operator+ (const CircularInt &ci1){
+		CircularInt result = *this;
+		result.add(ci1.number);
+		
+		return result; 	
+	}
+/*	CircularInt operator+ (const int &x)const{
+		CircularInt result = *this;
+		result.add(x);
+		
+		return result; 
+	}
+	
+	*/
+	
+	friend CircularInt operator+ ( CircularInt &ci1, const int &x){
+		CircularInt result = ci1;
+		result.add(x);	
+		return result; 
+	}
+	
+	friend CircularInt operator+ (const int &x ,const CircularInt &ci1){
+		CircularInt result = ci1;
+		result.add(x);
+		return result; 
+	}
+	
+	
+	
+	/*CircularInt operator- (const CircularInt &ci1){
+		CircularInt result = *this;
+		result.minus(ci1.number);
+		
+		return result; 	
+	}*/
+	
+	friend CircularInt operator- (const int &x ,const CircularInt &ci1){
+		CircularInt result = ci1;
+		int tmp = result.number;
+		result.number = x;
+		result.minus(tmp);
+		return result; 
+	}
+	
+	CircularInt operator* (const int &x){
+		CircularInt result = *this;
+		
+		result.number *= x;
+		fix();
+		
+		return result; 
+	}
+	CircularInt& operator*= (const int &x){
+		*this = *this * x;
+		fix();
+		return *this; 
+	}
+	
+	friend CircularInt operator- (const CircularInt &ci1) {
+		CircularInt result = ci1;
+		result.number = -result.number;
+		result.fix();
+		return result; 	
+	}
+	CircularInt operator- (const int &x){
+		CircularInt result = *this;
+		result.minus(x);
+		
+		return result; 
+	}
+	
+	friend CircularInt operator/ (const CircularInt &ci1, const int &x) {
+		CircularInt result = ci1;
+		if(result.number%x==0){
+			result.number = result.number / x;
+		}
+		else{
+			string str= "There is no number x in {";
+			//+str(result.start); //+","+result.end+"} such that x*"+x+"="+result.number+"";
+			
+			//string c1 = result.end +"";
+			//string c2 = result.start +"";
+			//string c3 = result.number+"";
+			//string c4 = x +"";
+			str+= to_string(x);
+			//str = str + c1 + ","+ c2 +"} such that x*"+ c4 +"="+ c3;
+		
+			throw str;
+		}  
+		
+		
+		
+		result.fix();
+		return result; 	
+	}
+	
+	
+	CircularInt& operator+= (const int &x){
+		*this = *this + x;
+		return *this; 
+	}
+	
+	CircularInt &operator++ (){
+		(*this)+=1;
+		return *this; 
+	}
+	
+	CircularInt operator++ (int){
+		CircularInt tmp = *this;
+		*this += 1;
+		
+		return tmp; 
+	}
+	ostream &operator<<(ostream &os ) const{ 
+		os << number;
+		return os;
+	}
+	
+	friend ostream &operator<<(ostream &os ,  CircularInt &m) { 
+		os << m.number;
+		return os;
+	}
+
+	private:
+	
+	int start;
+	int end;
+	
+	void add(int x){
+		number +=x;
+		fix();		
+	}
+	void minus(int x){
+		number -=x;
+			
+		fix();		
+	}
+	
+	void fix(){
+		while(number<start){
+			number = number + (end - start + 1);
+		}	
+		while(number>end){
+			number = number - (end - start + 1);
+		}
+	}
+
+};
+
+inline ostream &operator<<(ostream &os, const CircularInt &r)
+{ os << r.number; return os;}
+
+	
+
+	
+	
+	
