@@ -1,7 +1,8 @@
 #include <iostream>
+#include <sstream>
 #include <string>
-using namespace std;
 
+using namespace std;
 
 #include "CircularInt.hpp"
 
@@ -13,7 +14,6 @@ using namespace std;
 		number = start;
 	}
 	
-	//CircularInt::CircularInt(int & x1, int & x2):start(x1) , end(x2) , number(x1) {};
 	
 	/*
 	{
@@ -26,7 +26,7 @@ using namespace std;
 	
 	CircularInt CircularInt::operator+ (const CircularInt &ci1){
 		CircularInt result = *this;
-		result.CircularInt::add(ci1.number);
+		result.add(ci1.number);
 		
 		return result; 	
 	}
@@ -52,7 +52,6 @@ using namespace std;
 	}
 	
 	
-	
 	/*CircularInt operator- (const CircularInt &ci1){
 		CircularInt result = *this;
 		result.minus(ci1.number);
@@ -76,6 +75,7 @@ using namespace std;
 		
 		return result; 
 	}
+	
 	CircularInt& CircularInt::operator*= (const int &x){
 		*this = *this * x;
 		CircularInt::fix();
@@ -102,17 +102,16 @@ using namespace std;
 			result.number = result.number / x;
 		}
 		else{
+			//"There is no number x in {1,12} such that x*3=10"
 			string str= "There is no number x in {";
-			//+str(result.start); //+","+result.end+"} such that x*"+x+"="+result.number+"";
+			string send = NumberToString(ci1.end);
+			string sstart = NumberToString(ci1.start);
+			string snum = NumberToString(ci1.number);
+			string sx = NumberToString(x);
 			
-			//string c1 = result.end +"";
-			//string c2 = result.start +"";
-			//string c3 = result.number+"";
-			//string c4 = x +"";
-			//str+= to_string(x);
-			//str = str + c1 + ","+ c2 +"} such that x*"+ c4 +"="+ c3;
+			string message = str + sstart + "," + send + "} such that x*" + sx + "=" + snum ;
 		
-			throw str;
+			throw message;
 		}  
 		
 		
@@ -121,9 +120,17 @@ using namespace std;
 		return result; 	
 	}
 	
-	
+	string NumberToString (int Number ){
+     ostringstream ss;
+     ss << Number;
+     return ss.str();
+  }
+  
+  
 	CircularInt& CircularInt::operator+= (const int &x){
 		*this = *this + x;
+		this->fix();
+		
 		return *this; 
 	}
 	
@@ -147,8 +154,16 @@ using namespace std;
 		os << m.number;
 		return os;
 	}
-
 	
+	CircularInt CircularInt::operator& (const CircularInt &ci1){
+		CircularInt result = ci1;
+		result.number = result.number | this->number;
+		result.fix();
+		return result; 
+	}
+	
+	//CircularInt CircularInt::operator| (const CircularInt &ci1){}
+
 	
 	void CircularInt::add(int x){
 		number +=x;
@@ -174,9 +189,3 @@ using namespace std;
 	 os << r.number; 
 	 return os;
 	}
-
-	
-
-	
-	
-	
