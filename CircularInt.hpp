@@ -1,61 +1,78 @@
-#include <iostream>
-#include <string>
-#pragma once
 
-std::string NumberToString (int Number );
-
-class CircularInt{
-	public:
-	
-	int number;
-	int start;
-	int end;
-	
-	CircularInt(int x1, int x2);
-	
-	CircularInt operator+ (const CircularInt &ci1);
-	friend CircularInt operator+ (CircularInt &ci1, const int &x);
-	friend CircularInt operator+ (const int &x ,const CircularInt &ci1);
-	friend CircularInt operator- (const int &x ,const CircularInt &ci1);
-	CircularInt operator* (const int &x);
-	CircularInt& operator*= (const int &x);
-	friend CircularInt operator- (const CircularInt &ci1);
-	CircularInt operator- (const int &x);
-	friend CircularInt operator/ (const CircularInt &ci1, const int &x);
-	CircularInt& operator/= (const int &x);
-	CircularInt& operator+= (const int &x);
-	CircularInt& operator++ ();
-	CircularInt operator++ (int);
-	std::ostream &operator<<(std::ostream &os);
-	friend std::ostream &operator<<(std::ostream &os,  CircularInt &m);
-	CircularInt operator& (const CircularInt &ci1);
-	CircularInt operator| (const CircularInt &ci1);
-	CircularInt& operator-- ();
-	CircularInt operator-- (int);
-	CircularInt& operator-= (const int &x);
-	
-	
-	
-	 bool operator <(const CircularInt& d);
-	 bool operator >(const CircularInt& d);
-	 bool operator <=(const CircularInt& d);
-     bool operator >=(const CircularInt& d);
-	 bool operator ==(const CircularInt& d);
-	 bool operator !=(const CircularInt& d);
-	 
-	 bool operator <(const int& X);
-	 bool operator >(const int& x);
-	 bool operator <=(const int& x);
-     bool operator >=(const int& x);
-	 bool operator ==(const int& x);
-	 bool operator !=(const int& x);
-	
-	
-	
-	void add(int x);
-	void minus(int x);
-	void fix();
-	
-	friend std::ostream& operator<<(std::ostream& os, CircularInt const& r);
-	//friend ostream &operator<<(ostream &os, const CircularInt &r);
-};
+        CircularInt& operator= (int n);
+        CircularInt operator+ (const CircularInt& ci) const; // ci + ci
+        CircularInt operator- (const CircularInt& ci) const; // ci - ci
+        CircularInt operator* (const CircularInt& ci) const; // ci * ci
+        CircularInt operator/ (const CircularInt& ci) ; // ci / ci
+        CircularInt operator% (const CircularInt& ci) const; // ci % ci
+        CircularInt operator^ (const CircularInt& ci) const; // ci ^ ci
+        CircularInt operator& (const CircularInt& ci) const; // ci & ci
+        CircularInt operator| (const CircularInt& ci) const; // ci | ci
+        CircularInt operator<< (const CircularInt& ci) const; // ci << ci
+        CircularInt operator>> (const CircularInt& ci) const; // ci >> ci
+        CircularInt operator+ (const int n) const; // ci + int
+        CircularInt operator- (const int n) const; // ci - int
+        CircularInt operator* (const int n) const; // ci * int
+        CircularInt operator/ (const int n) ; // ci / int
+        CircularInt operator% (const int n) const; // ci % int
+        CircularInt operator^ (const int n) const; // ci ^ int
+        CircularInt operator& (const int n) const; // ci & int
+        CircularInt operator| (const int n) const; // ci | int
+        CircularInt operator<< (const int n) const; // ci << int
+        CircularInt operator>>(const int n) const; // ci >> int
+        CircularInt& operator+= (const CircularInt& ci); // ci += ci
+        CircularInt& operator-= (const CircularInt& ci); // ci -= ci
+        CircularInt& operator*= (const CircularInt& ci); // ci *= ci
+        CircularInt& operator/= (const CircularInt& ci); // ci /= ci
+        CircularInt& operator%= (const CircularInt& ci); // ci %= ci
+        CircularInt& operator^= (const CircularInt& ci); // ci ^= ci
+        CircularInt& operator&= (const CircularInt& ci); // ci &= ci
+        CircularInt& operator|= (const CircularInt& ci); // ci |= ci
+        CircularInt& operator<<= (const CircularInt& ci); // ci <<= ci
+        CircularInt& operator>>= (const CircularInt& ci); // ci >>= ci
+        CircularInt& operator+= (const int n); // ci += int
+        CircularInt& operator-= (const int n); // ci -= int
+        CircularInt& operator*= (const int n); // ci *= int
+        CircularInt& operator/= (const int n); // ci /= int
+        CircularInt& operator%= (const int n); // ci %= int
+        CircularInt& operator^= (const int n); // ci ^= int
+        CircularInt& operator&= (const int n); // ci &= int
+        CircularInt& operator|= (const int n); // ci |= int
+        CircularInt& operator<<= (const int n); // ci <<= int
+        CircularInt& operator>>= (const int n); // ci >>= int
+        CircularInt& operator++ (); //prefix ++ -> ++(a)
+        CircularInt& operator-- (); //prefix -- -> --(a)
+        const CircularInt operator++ (int flag_for_postfix_increment); //postfix ++ -> (a)++
+        const CircularInt operator-- (int flag_for_postfix_increment); //postfix -- -> (a)--
+        const CircularInt operator- () const; // -ci
+        const CircularInt operator~ () const; // ~ci
+        friend CircularInt operator+ (int n, const CircularInt& ci); // int + ci
+        friend CircularInt operator- (int n, const CircularInt& ci); // int - ci
+        friend CircularInt operator* (int n, const CircularInt& ci); // int * ci
+        friend CircularInt operator/ (int n, CircularInt& ci); // int / ci
+        friend CircularInt operator% (int n, const CircularInt& ci); // int % ci
+        friend CircularInt operator^ (int n, const CircularInt& ci); // int ^ ci
+        friend CircularInt operator& (int n, const CircularInt& ci); // int & ci
+        friend CircularInt operator| (int n, const CircularInt& ci); // int | ci
+        friend CircularInt operator<< (int n, const CircularInt& ci); // int << ci
+        friend CircularInt operator>> (int n, const CircularInt& ci); // int >> ci
+        const bool operator==(const CircularInt& ci) const;
+        const bool operator!=(const CircularInt& ci) const;
+        const bool operator<(const CircularInt& ci) const;
+        const bool operator<=(const CircularInt& ci) const;
+        const bool operator>(const CircularInt& ci) const;
+        const bool operator>=(const CircularInt& ci) const;
+        const bool operator==(const int n) const;
+        const bool operator!=(const int n) const;
+        const bool operator<(const int n) const;
+        const bool operator<=(const int n) const;
+        const bool operator>(const int n) const;
+        const bool operator>=(const int n) const;
+        friend const bool operator==(const int n, const CircularInt& ci);
+        friend const bool operator!=(const int n, const CircularInt& ci);
+        friend const bool operator<(const int n, const CircularInt& ci);
+        friend const bool operator<=(const int n, const CircularInt& ci);
+        friend const bool operator>(const int n, const CircularInt& ci);
+        friend const bool operator>=(const int n, const CircularInt& ci);
+        friend ostream& operator<< (ostream& os, const CircularInt& ci);
+        friend istream& operator>> (istream& is, CircularInt& ci);
