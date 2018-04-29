@@ -1,4 +1,20 @@
+#include <iostream>
+using namespace std;
 
+class CircularInt{
+    private:
+        int start, end, number, range;
+        
+        CircularInt(const CircularInt& clone);
+        
+        /* make this->number in the range */
+        void normalize();
+        // int normalize(long n);
+        int normalize(int n);
+        
+    public:
+        CircularInt(int x, int y);
+        
         CircularInt& operator= (int n);
         CircularInt operator+ (const CircularInt& ci) const; // ci + ci
         CircularInt operator- (const CircularInt& ci) const; // ci - ci
@@ -76,3 +92,5 @@
         friend const bool operator>=(const int n, const CircularInt& ci);
         friend ostream& operator<< (ostream& os, const CircularInt& ci);
         friend istream& operator>> (istream& is, CircularInt& ci);
+        
+};
