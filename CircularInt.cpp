@@ -9,15 +9,7 @@ CircularInt::CircularInt(int x, int y) : start(x), end(y) {
     range = end - start + 1;
 }
 
-CircularInt::CircularInt(const CircularInt& clone){
-    start = clone.start;
-    end = clone.end;
-    number = clone.number;
-    range = clone.range;
-}
-
-/* make 'number' variable in the range */
-void CircularInt::normalize(){
+void CircularInt::fix(){
     if(number >= start && number <= end)
         return;
     
@@ -27,7 +19,7 @@ void CircularInt::normalize(){
         number += range;
 }
 
-int CircularInt::normalize(int n){
+int CircularInt::fix(int n){
     if(n >= start && n <= end)
         return n;
     
@@ -41,28 +33,36 @@ int CircularInt::normalize(int n){
 
 CircularInt& CircularInt::operator= (int n){
     number = n;
-    normalize();
+    fix();
     return *this;
 }
+
+CircularInt::CircularInt(const CircularInt& clone){
+    start = clone.start;
+    end = clone.end;
+    number = clone.number;
+    range = clone.range;
+}
+
 
 CircularInt CircularInt::operator+ (const CircularInt& ci) const{
    CircularInt tmp(*this);
    tmp.number += ci.number;
-   tmp.normalize();
+   tmp.fix();
    return tmp;
 }
 
 CircularInt CircularInt::operator- (const CircularInt& ci) const{ // ci - ci
     CircularInt tmp(*this);
     tmp.number -= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator* (const CircularInt& ci) const{ // ci * ci
     CircularInt tmp(*this);
     tmp.number *= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
@@ -71,7 +71,7 @@ CircularInt CircularInt::operator/ (const CircularInt& ci) { // ci / ci
     for(i = start ;i < end; i++){
         // long l = i * ci.number;
         int l = i * ci.number;
-        int res = normalize(l);
+        int res = fix(l);
         if(res == number){
             CircularInt tmp(*this);
             tmp.number = i;
@@ -84,66 +84,62 @@ CircularInt CircularInt::operator/ (const CircularInt& ci) { // ci / ci
 CircularInt CircularInt::operator% (const CircularInt& ci) const{ // ci % ci
     CircularInt tmp(*this);
     tmp.number %= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator^ (const CircularInt& ci) const{
     CircularInt tmp(*this);
     tmp.number ^= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator& (const CircularInt& ci) const{ // ci & ci
     CircularInt tmp(*this);
     tmp.number &= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator| (const CircularInt& ci) const{ // ci | ci
     CircularInt tmp(*this);
     tmp.number |= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
+CircularInt CircularInt::operator<< (const int n) const{ // ci << int
+    CircularInt tmp(*this);
+    tmp.number <<= n;
+    tmp.fix();
+    return tmp;
+}
 CircularInt CircularInt::operator<< (const CircularInt& ci) const{ // ci << ci
     CircularInt tmp(*this);
     tmp.number <<= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator>> (const CircularInt& ci) const{ // ci >> ci
     CircularInt tmp(*this);
     tmp.number >>= ci.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
-
-CircularInt CircularInt::operator+ (int n) const{
+CircularInt CircularInt::operator>>(const int n) const{ // ci >> int
     CircularInt tmp(*this);
-    tmp.number += n;
-    tmp.normalize();
+    tmp.number >>= n;
+    tmp.fix();
     return tmp;
 }
 
-
-/* CircularInt - number
-   Example: (CircularInt hour)1 - (int)13 = (CircularInt)12 */
-CircularInt CircularInt::operator- (int n) const{
-    CircularInt tmp(*this);
-    tmp.number -= n;
-    tmp.normalize();
-    return tmp;
-}
 
 CircularInt CircularInt::operator* (int n) const{
     CircularInt tmp(*this);
     tmp.number *= n;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
@@ -151,7 +147,7 @@ CircularInt CircularInt::operator/ (const int n) {
     int i;
     for(i = start; i<end; i++){
         long l = i*n;
-        int res = normalize(l);
+        int res = fix(l);
         if(res == number){
             CircularInt tmp(*this);
             tmp.number = i;
@@ -164,60 +160,47 @@ CircularInt CircularInt::operator/ (const int n) {
 CircularInt CircularInt::operator% (const int n) const{
     CircularInt tmp(*this);
     tmp.number %= n;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator^ (const int n) const{ // ci ^ int
     CircularInt tmp(*this);
     tmp.number ^= n;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator& (const int n) const{ // ci & int
     CircularInt tmp(*this);
     tmp.number &= n;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt CircularInt::operator| (const int n) const{ // ci | int
     CircularInt tmp(*this);
     tmp.number |= n;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
-CircularInt CircularInt::operator<< (const int n) const{ // ci << int
-    CircularInt tmp(*this);
-    tmp.number <<= n;
-    tmp.normalize();
-    return tmp;
-}
-
-CircularInt CircularInt::operator>>(const int n) const{ // ci >> int
-    CircularInt tmp(*this);
-    tmp.number >>= n;
-    tmp.normalize();
-    return tmp;
-}
         
 CircularInt& CircularInt::operator+= (const CircularInt& ci){ // ci += ci
     number += ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator-= (const CircularInt& ci){ // ci -= ci
     number -= ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator*= (const CircularInt& ci){ // ci *= ci
     number *= ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
@@ -228,56 +211,56 @@ CircularInt& CircularInt::operator/= (const CircularInt& ci){ // ci /= ci
 
 CircularInt& CircularInt::operator%= (const CircularInt& ci){ // ci %= ci
     number %= ci.number;
-    normalize();
+    fix();
     return *this;
     
 }
 
 CircularInt& CircularInt::operator^= (const CircularInt& ci){ // ci ^= ci
     number ^= ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator&= (const CircularInt& ci){ // ci &= ci
     number &= ci.number;
-    normalize();
+    fix();
     return *this;
 }
         
 CircularInt& CircularInt::operator|= (const CircularInt& ci){ // ci |= ci
     number |= ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator<<= (const CircularInt& ci){ // ci <<= ci
     number <<= ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator>>= (const CircularInt& ci){ // ci >>= ci
     number >>= ci.number;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator+= (const int n){
     number += n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator-= (const int n){
     number -= n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator*= (const int n){
     number *= n;
-    normalize();
+    fix();
     return *this;
 }
 
@@ -288,94 +271,109 @@ CircularInt& CircularInt::operator/= (const int n){
 
 CircularInt& CircularInt::operator%= (const int n){
     number %= n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator^= (const int n){ // ci ^= int
     number ^= n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator&= (const int n){ // ci &= int
     number &= n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator|= (const int n){ // ci|= int
     number |= n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator<<= (const int n){ // ci <<= int
     number <<= n;
-    normalize();
+    fix();
     return *this;
 }
 
 CircularInt& CircularInt::operator>>= (const int n){ // ci >>= int
     number >>= n;
-    normalize();
-    return *this;
-}
-
-/* prefix ++ -> ++(a) */
-CircularInt& CircularInt::operator++ (){
-    (this->number)++;
-    normalize();
+    fix();
     return *this;
 }
 
 /* prefix -- -> --(a) */
 CircularInt& CircularInt::operator-- (){
     (this->number)--;
-    normalize();
+    fix();
     return *this;
 }
+CircularInt operator+ (int n, const CircularInt& ci){
+    return ci+n;
+}
+
 
 const CircularInt CircularInt::operator++ (int flag_for_postfix_increment){
     CircularInt tmp(*this); 
     ++(this->number);
-    this->normalize();
+    this->fix();
     return tmp; //returns the copy
     
 }
+CircularInt& CircularInt::operator++ (){
+    (this->number)++;
+    fix();
+    return *this;
+}
+
 
 const CircularInt CircularInt::operator-- (int flag_for_postfix_discrement){
     CircularInt tmp(*this); 
     --(this->number);
-    this->normalize();
+    this->fix();
     return tmp; //returns the copy
     
+}
+
+CircularInt CircularInt::operator+ (int n) const{
+    CircularInt tmp(*this);
+    tmp.number += n;
+    tmp.fix();
+    return tmp;
+}
+
+CircularInt CircularInt::operator- (int n) const{
+    CircularInt tmp(*this);
+    tmp.number -= n;
+    tmp.fix();
+    return tmp;
 }
 
 const CircularInt CircularInt::operator- () const{
     CircularInt tmp(*this);
     tmp.number = tmp.end - tmp.number;
-    tmp.normalize();
+    tmp.fix();
+    return tmp;
+}
+CircularInt operator- (int n, const CircularInt& ci){
+    CircularInt tmp(ci);
+    tmp.number = n - tmp.number;
+    tmp.fix();
     return tmp;
 }
 
 const CircularInt CircularInt::operator~ () const{ // ~ci
     CircularInt tmp(*this);
     tmp.number = ~tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
-CircularInt operator+ (int n, const CircularInt& ci){
-    return ci+n;
-}
 
-CircularInt operator- (int n, const CircularInt& ci){
-    CircularInt tmp(ci);
-    tmp.number = n - tmp.number;
-    tmp.normalize();
-    return tmp;
-}
+
 
 
 CircularInt operator* (int n, const CircularInt& ci){ // int * hour
@@ -387,7 +385,7 @@ CircularInt operator/ (int n, CircularInt& ci){ // int / hour
     int i;
     for(i = ci.start; i<ci.end; i++){
         long l = i*ci.number;
-        int res = ci.normalize(l);
+        int res = ci.fix(l);
         if(res == n){
             CircularInt tmp(ci);
             tmp.number = i;
@@ -401,42 +399,42 @@ CircularInt operator/ (int n, CircularInt& ci){ // int / hour
 CircularInt operator% (int n, const CircularInt& ci){ // int % ci
     CircularInt tmp(ci);
     tmp.number = n % tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 } 
 
 CircularInt operator^ (int n, const CircularInt& ci){ // int ^ ci
     CircularInt tmp(ci);
     tmp.number = n ^ tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt operator& (int n, const CircularInt& ci){ // int & ci
     CircularInt tmp(ci);
     tmp.number = n & tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt operator| (int n, const CircularInt& ci){ // int | ci
     CircularInt tmp(ci);
     tmp.number = n | tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt operator<< (int n, const CircularInt& ci){ // int << ci
     CircularInt tmp(ci);
     tmp.number = n << tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
 
 CircularInt operator>> (int n, const CircularInt& ci){ // int >> ci
     CircularInt tmp(ci);
     tmp.number = n >> tmp.number;
-    tmp.normalize();
+    tmp.fix();
     return tmp;
 }
         
