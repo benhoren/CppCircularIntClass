@@ -26,8 +26,8 @@ class CircularInt{
 	CircularInt& operator+= (const int &x);
 	CircularInt& operator++ ();
 	CircularInt operator++ (int);
-	ostream &operator<<(ostream &os);
-	friend ostream &operator<<(ostream &os,  CircularInt &m);
+	std::ostream &operator<<(std::ostream &os);
+	friend std::ostream &operator<<(std::ostream &os,  CircularInt &m);
 	CircularInt operator& (const CircularInt &ci1);
 	CircularInt operator| (const CircularInt &ci1);
 	CircularInt& operator-- ();
