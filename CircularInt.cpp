@@ -92,11 +92,16 @@ using namespace std;
 	CircularInt CircularInt::operator- (const int &x){
 		CircularInt result = *this;
 		result.minus(x);
-		
 		return result; 
 	}
+	//CircularInt& operator/= (const CircularInt &ci1);
+	CircularInt& CircularInt::operator/= (const int &x){
+		*this = *this / x;
+		return *this; 
+	}
 	
-	 CircularInt operator/ (const CircularInt &ci1, const int &x) {
+	
+	CircularInt operator/ (const CircularInt &ci1, const int &x) {
 		CircularInt result = ci1;
 		if(result.number%x==0){
 			result.number = result.number / x;
@@ -142,9 +147,27 @@ using namespace std;
 	CircularInt CircularInt::operator++ (int){
 		CircularInt tmp = *this;
 		*this += 1;
-		
 		return tmp; 
 	}
+	CircularInt& CircularInt::operator-- (){
+		(*this)-=1;
+		return *this; 
+	}
+	
+	CircularInt CircularInt::operator-- (int){
+		CircularInt tmp = *this;
+		*this -= 1;
+		return tmp; 
+	}
+	CircularInt& CircularInt::operator-= (const int &x){
+		*this = *this - x;
+		this->fix();
+		
+		return *this; 
+	}
+	
+	
+	
 	ostream& CircularInt::operator<<(ostream &os ) { 
 		os << number;
 		return os;
@@ -155,14 +178,63 @@ using namespace std;
 		return os;
 	}
 	
-	CircularInt CircularInt::operator& (const CircularInt &ci1){
+	/*CircularInt CircularInt::operator& (const CircularInt &ci1){
 		CircularInt result = ci1;
-		result.number = result.number | this->number;
+		result.number = result.number & this->number;
 		result.fix();
 		return result; 
 	}
 	
+	CircularInt CircularInt::operator| (const CircularInt &ci1){
+		CircularInt result = ci1;
+		result.number = result.number | this->number;
+		result.fix();
+		return result; 
+	}*/
+	
 	//CircularInt CircularInt::operator| (const CircularInt &ci1){}
+	
+	 bool CircularInt::operator <(const CircularInt& d){
+		 return number < d.number;
+	 }
+	 bool CircularInt::operator >(const CircularInt& d){
+		 return number > d.number;
+	 }
+	 bool CircularInt::operator <=(const CircularInt& d){
+		 return number <= d.number;
+	 }
+     bool CircularInt::operator >=(const CircularInt& d){
+		 return number >= d.number;
+	 }
+	 bool CircularInt::operator ==(const CircularInt& d){
+		 return number == d.number;
+	 }
+	 bool CircularInt::operator !=(const CircularInt& d){
+		 return number != d.number;
+	 }
+	 
+	 
+	 bool CircularInt::operator <(const int& x){
+		 return number < x;
+	 }
+	 bool CircularInt::operator >(const int& x){
+		 return number > x;
+	 }
+	 bool CircularInt::operator <=(const int& x){
+		 return number <= x;
+	 }
+     bool CircularInt::operator >=(const int& x){
+		 return number >= x;
+	 }
+	 bool CircularInt::operator ==(const int& x){
+		 return number == x;
+	 }
+	 bool CircularInt::operator !=(const int& x){
+		 return number != x;
+	 }
+	
+	
+	
 
 	
 	void CircularInt::add(int x){
